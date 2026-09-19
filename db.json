@@ -23,6 +23,12 @@
       "name": "Test User",
       "email": "testuser@example.com",
       "password": "123456"
+    },
+    {
+      "id": 1789806325586,
+      "name": "Temp User",
+      "email": "tempuser@example.com",
+      "password": "temp123"
     }
   ],
   "products": [
