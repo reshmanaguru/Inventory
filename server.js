@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename)
 const DATA_PATH = path.join(__dirname, 'db.json')
 
 const startServer = (port) => {
-  const server = app.listen(port, () => {
-    console.log(`Inventory API running on http://localhost:${port}`)
+  const server = app.listen(port, '0.0.0.0', () => {
+    console.log(`Inventory API running on http://0.0.0.0:${port}`)
   })
 
   server.on('error', (error) => {
@@ -26,7 +26,12 @@ const startServer = (port) => {
   })
 }
 
-app.use(cors())
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+)
 app.use(express.json({ limit: '2mb' }))
 
 const readData = () => {
@@ -179,6 +184,11 @@ apiRouter.delete('/products/:id', (req, res) => {
   return res.json({ message: 'Product deleted successfully.' })
 })
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Inventory API is running' })
+})
+
 app.use('/api', apiRouter)
 
-startServer(Number(process.env.PORT) || 3002)
+const port = Number(process.env.PORT) || 3002
+startServer(port)
