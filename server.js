@@ -5,6 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const app = express()
+const apiRouter = express.Router()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const DATA_PATH = path.join(__dirname, 'db.json')
@@ -49,11 +50,11 @@ const isValidUser = (email, password) => {
   return user || null
 }
 
-app.get('/health', (req, res) => {
+apiRouter.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Inventory API is running' })
 })
 
-app.post('/signup', (req, res) => {
+apiRouter.post('/signup', (req, res) => {
   const { name, email, password } = req.body
 
   if (!name || !email || !password) {
@@ -83,7 +84,7 @@ app.post('/signup', (req, res) => {
   })
 })
 
-app.post('/login', (req, res) => {
+apiRouter.post('/login', (req, res) => {
   const { email, password } = req.body
 
   if (!email || !password) {
@@ -102,12 +103,12 @@ app.post('/login', (req, res) => {
   })
 })
 
-app.get('/products', (req, res) => {
+apiRouter.get('/products', (req, res) => {
   const { products } = readData()
   return res.json(products)
 })
 
-app.get('/products/:id', (req, res) => {
+apiRouter.get('/products/:id', (req, res) => {
   const { products } = readData()
   const product = products.find((item) => item.id === Number(req.params.id))
 
@@ -118,7 +119,7 @@ app.get('/products/:id', (req, res) => {
   return res.json(product)
 })
 
-app.post('/products', (req, res) => {
+apiRouter.post('/products', (req, res) => {
   const { name, description, category, price, stock, image, favorite } = req.body
 
   if (!name || !description || !category || !image) {
@@ -143,7 +144,7 @@ app.post('/products', (req, res) => {
   return res.status(201).json(newProduct)
 })
 
-app.put('/products/:id', (req, res) => {
+apiRouter.put('/products/:id', (req, res) => {
   const data = readData()
   const index = data.products.findIndex((item) => item.id === Number(req.params.id))
 
@@ -164,7 +165,7 @@ app.put('/products/:id', (req, res) => {
   return res.json(updatedProduct)
 })
 
-app.delete('/products/:id', (req, res) => {
+apiRouter.delete('/products/:id', (req, res) => {
   const data = readData()
   const products = data.products.filter((item) => item.id !== Number(req.params.id))
 
@@ -177,5 +178,7 @@ app.delete('/products/:id', (req, res) => {
 
   return res.json({ message: 'Product deleted successfully.' })
 })
+
+app.use('/api', apiRouter)
 
 startServer(Number(process.env.PORT) || 3002)

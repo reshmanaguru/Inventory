@@ -17,6 +17,12 @@
       "name": "reshu",
       "email": "reshmanaguru630@gmail.com",
       "password": "@Naguru30"
+    },
+    {
+      "id": 1789805094418,
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "password": "123456"
     }
   ],
   "products": [
