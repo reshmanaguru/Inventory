@@ -188,6 +188,10 @@ app.get('/', (req, res) => {
   res.json({ message: 'Inventory API is running' })
 })
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Inventory API is running' })
+})
+
 app.use('/api', apiRouter)
 
 const port = Number(process.env.PORT) || 3002

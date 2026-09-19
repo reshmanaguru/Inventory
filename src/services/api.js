@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const localApiUrl = 'http://localhost:3002/api'
-const productionFallbackUrl = '/api'
+const productionFallbackUrl = 'https://your-render-service.onrender.com/api'
 
 const normalizeApiBaseUrl = (value) => {
   if (!value) return value
