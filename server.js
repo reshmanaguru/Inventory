@@ -55,10 +55,6 @@ const isValidUser = (email, password) => {
   return user || null
 }
 
-apiRouter.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Inventory API is running' })
-})
-
 apiRouter.post('/signup', (req, res) => {
   const { name, email, password } = req.body
 
@@ -189,7 +185,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Inventory API is running' })
+  res.json({
+    status: 'ok',
+    message: 'Inventory API is running',
+  })
 })
 
 app.use('/api', apiRouter)
